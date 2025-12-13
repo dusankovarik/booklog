@@ -2,7 +2,7 @@
 
 namespace BookLog.Dtos {
     public class AuthorDto {
-        public int Id { get; set; }
+        public int? Id { get; set; }
 
         [Required]
         [StringLength(50)]

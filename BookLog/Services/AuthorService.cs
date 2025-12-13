@@ -18,6 +18,11 @@ namespace BookLog.Services {
             return authorDtos;
         }
 
+        public async Task CreateAsync(AuthorDto newAuthor) {
+            await _dbContext.Authors.AddAsync(DtoToModel(newAuthor));
+            await _dbContext.SaveChangesAsync();
+        }
+
         private AuthorDto ModelToDto(Author author) {
             return new AuthorDto() {
                 Id = author.Id,
@@ -28,6 +33,18 @@ namespace BookLog.Services {
                 YearOfBirth = author.YearOfBirth,
                 YearOfDeath = author.YearOfDeath,
                 DatabazeKnihUrl = author.DatabazeKnihUrl,
+            };
+        }
+
+        private Author DtoToModel(AuthorDto authorDto) {
+            return new Author() {
+                FirstName = authorDto.FirstName,
+                MiddleName = authorDto.MiddleName,
+                LastName = authorDto.LastName,
+                Nationality = authorDto.Nationality,
+                YearOfBirth= authorDto.YearOfBirth,
+                YearOfDeath= authorDto.YearOfDeath,
+                DatabazeKnihUrl = authorDto.DatabazeKnihUrl,
             };
         }
     }

@@ -18,5 +18,11 @@ namespace BookLog.Controllers {
         public IActionResult Create() {
             return View();
         }
+
+        [HttpPost]
+        public async Task<IActionResult> CreateAsync(AuthorDto newAuthor) {
+            await _service.CreateAsync(newAuthor);
+            return RedirectToAction("Index");
+        }
     }
 }
