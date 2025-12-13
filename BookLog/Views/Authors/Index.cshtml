@@ -1,5 +1,19 @@
-﻿@*
-    For more information on enabling MVC forEdit empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
+﻿@using BookLog.Dtos
+
+@model IEnumerable<AuthorDto>
+
+<h1>List of all authors</h1>
+<div>
+    <a class="btn btn-success">Create</a>
+</div>
+@foreach (var author in Model) {
+    <div class="border border-1 border-dark p-2">
+        <h5>@author.FullName</h5>
+        <p>Nationality: @author.NationalityDisplay</p>
+        <p>@author.LifeSpan</p>
+        <a class="btn btn-warning">Edit</a>
+        <form method="post">
+            <button type="submit" class="btn btn-danger">Delete</button>
+        </form>
+    </div>
 }
