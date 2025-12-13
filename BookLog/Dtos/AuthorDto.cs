@@ -1,8 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
 namespace BookLog.Dtos {
-    public class AuthorEditDto {
-        public int? Id { get; set; }
+    public class AuthorDto {
+        public int Id { get; set; }
 
         [Required]
         [StringLength(50)]
@@ -26,5 +26,16 @@ namespace BookLog.Dtos {
 
         [Url]
         public string? DatabazeKnihUrl { get; set; }
+
+        public string FullName => string.Join(' ', new[] { FirstName, MiddleName, LastName }
+            .Where(x => !string.IsNullOrWhiteSpace(x)));
+
+        public string NationalityDisplay => string.IsNullOrWhiteSpace(Nationality) ? "unknown" : Nationality;
+
+        public string? LifeSpan => YearOfBirth.HasValue
+            ? YearOfDeath.HasValue
+                ? $"{YearOfBirth}-{YearOfDeath}"
+                : YearOfBirth.ToString()
+            : string.Empty;
     }
 }
