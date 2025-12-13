@@ -2,23 +2,18 @@ using System.Diagnostics;
 using BookLog.Models;
 using Microsoft.AspNetCore.Mvc;
 
-namespace BookLog.Controllers
-{
-    public class HomeController : Controller
-    {
-        public IActionResult Index()
-        {
+namespace BookLog.Controllers {
+    public class HomeController : Controller {
+        public IActionResult Index() {
             return View();
         }
 
-        public IActionResult Privacy()
-        {
+        public IActionResult Privacy() {
             return View();
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
+        public IActionResult Error() {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
     }
