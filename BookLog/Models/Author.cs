@@ -5,8 +5,9 @@
         public string? MiddleName { get; set; }
         public required string LastName { get; set; }
         public string? Nationality { get; set; }
-        public int YearOfBirth { get; set; }
+        public int? YearOfBirth { get; set; }
         public int? YearOfDeath { get; set; }
+        public ICollection<Book> Books { get; set; } = new List<Book>(); 
         public string? DatabazeKnihUrl { get; set; }
     }
 }
