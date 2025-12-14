@@ -34,8 +34,8 @@ namespace BookLog.Controllers {
         }
 
         [HttpPost]
-        public async Task<IActionResult> Edit(AuthorDto author) {
-            await _service.UpdateAsync(author);
+        public async Task<IActionResult> Edit(AuthorDto authorDto) {
+            await _service.UpdateAsync(authorDto);
             return RedirectToAction("Index");
         }
 

@@ -1,0 +1,17 @@
+﻿@using BookLog.Dtos
+
+@model IEnumerable<GenreDto>
+
+<h1>List of all genres</h1>
+<div>
+    <a class="btn btn-success" asp-action="Create">Create</a>
+</div>
+@foreach (var genre in Model) {
+    <div class="border border-1 border-dark p-2">
+        <h5>@genre.Name</h5>
+        <a class="btn btn-warning" asp-action="Edit" asp-route-id="@genre.Id">Edit</a>
+        <form method="post" style="display: inline">
+            <button type="submit" class="btn btn-danger" asp-action="Delete" asp-route-id="@genre.Id">Delete</button>
+        </form>
+    </div>
+}

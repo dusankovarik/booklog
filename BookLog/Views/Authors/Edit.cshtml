@@ -4,34 +4,42 @@
 
 <h4>Create a new author</h4>
 <form asp-action="Edit" method="post">
+    <div class="text-danger" asp-validation-summary="All"></div>
     <input type="hidden" asp-for="Id" />
     <div>
         <label asp-for="FirstName"></label>
         <input type="text" class="form-control" asp-for="FirstName" />
+        <span asp-validation-for="FirstName" class="text-danger"></span>
     </div>
     <div>
         <label asp-for="MiddleName"></label>
         <input type="text" class="form-control" asp-for="MiddleName" />
+        <span asp-validation-for="MiddleName" class="text-danger"></span>
     </div>
     <div>
         <label asp-for="LastName"></label>
         <input type="text" class="form-control" asp-for="LastName" />
+        <span asp-validation-for="LastName" class="text-danger"></span>
     </div>
     <div>
         <label asp-for="Nationality"></label>
         <input type="text" class="form-control" asp-for="Nationality" />
+        <span asp-validation-for="Nationality" class="text-danger"></span>
     </div>
     <div>
         <label asp-for="YearOfBirth"></label>
         <input type="number" class="form-control" asp-for="YearOfBirth" />
+        <span asp-validation-for="YearOfBirth" class="text-danger"></span>
     </div>
     <div>
         <label asp-for="YearOfDeath"></label>
         <input type="number" class="form-control" asp-for="YearOfDeath" />
+        <span asp-validation-for="YearOfDeath" class="text-danger"></span>
     </div>
     <div>
         <label asp-for="DatabazeKnihUrl"></label>
         <input type="url" class="form-control" asp-for="DatabazeKnihUrl" />
+        <span asp-validation-for="DatabazeKnihUrl" class="text-danger"></span>
     </div>
     <input type="submit" class="btn btn-success" value="Update" />
 </form>
