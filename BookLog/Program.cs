@@ -10,6 +10,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(options => {
     options.UseSqlServer(builder.Configuration.GetConnectionString("BookLogDbConnection"));
 });
 builder.Services.AddScoped<AuthorService>();
+builder.Services.AddScoped<GenreService>();
 
 var app = builder.Build();
 
