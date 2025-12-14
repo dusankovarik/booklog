@@ -8,12 +8,16 @@
 </div>
 @foreach (var author in Model) {
     <div class="border border-1 border-dark p-2">
-        <h5>@author.FullName</h5>
-        <p>Nationality: @author.NationalityDisplay</p>
-        <p>@author.LifeSpan</p>
-        <a class="btn btn-warning">Edit</a>
-        <form method="post">
-            <button type="submit" class="btn btn-danger">Delete</button>
+        <h5>
+            @author.FullName
+            @if (!string.IsNullOrWhiteSpace(author.DatabazeKnihUrl)) {
+                <a href="@author.DatabazeKnihUrl" target="_blank" title="DatabazeKnih.cz">🔗</a>
+            }
+        </h5>
+        <p>@author.NationalityDisplay @author.LifeSpan</p>
+        <a class="btn btn-warning" asp-action="Edit" asp-route-id="@author.Id">Edit</a>
+        <form method="post" style="display: inline">
+            <button type="submit" class="btn btn-danger" asp-action="Delete" asp-route-id="@author.Id">Delete</button>
         </form>
     </div>
 }

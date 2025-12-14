@@ -1,0 +1,37 @@
+﻿@using BookLog.Dtos
+
+@model AuthorDto
+
+<h4>Create a new author</h4>
+<form asp-action="Edit" method="post">
+    <input type="hidden" asp-for="Id" />
+    <div>
+        <label asp-for="FirstName"></label>
+        <input type="text" class="form-control" asp-for="FirstName" />
+    </div>
+    <div>
+        <label asp-for="MiddleName"></label>
+        <input type="text" class="form-control" asp-for="MiddleName" />
+    </div>
+    <div>
+        <label asp-for="LastName"></label>
+        <input type="text" class="form-control" asp-for="LastName" />
+    </div>
+    <div>
+        <label asp-for="Nationality"></label>
+        <input type="text" class="form-control" asp-for="Nationality" />
+    </div>
+    <div>
+        <label asp-for="YearOfBirth"></label>
+        <input type="number" class="form-control" asp-for="YearOfBirth" />
+    </div>
+    <div>
+        <label asp-for="YearOfDeath"></label>
+        <input type="number" class="form-control" asp-for="YearOfDeath" />
+    </div>
+    <div>
+        <label asp-for="DatabazeKnihUrl"></label>
+        <input type="url" class="form-control" asp-for="DatabazeKnihUrl" />
+    </div>
+    <input type="submit" class="btn btn-success" value="Update" />
+</form>

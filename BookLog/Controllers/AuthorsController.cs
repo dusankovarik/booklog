@@ -20,8 +20,22 @@ namespace BookLog.Controllers {
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateAsync(AuthorDto newAuthor) {
+        public async Task<IActionResult> Create(AuthorDto newAuthor) {
             await _service.CreateAsync(newAuthor);
+            return RedirectToAction("Index");
+        }
+
+        public async Task<IActionResult> Edit(int id) {
+            var authorToEdit = await _service.GetByIdAsync(id);
+            if (authorToEdit == null) {
+                return View("NotFound");
+            }
+            return View(authorToEdit);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(AuthorDto author) {
+            await _service.UpdateAsync(author);
             return RedirectToAction("Index");
         }
     }

@@ -1,5 +1,6 @@
 ﻿using BookLog.Dtos;
 using BookLog.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace BookLog.Services {
     public class AuthorService {
@@ -20,6 +21,29 @@ namespace BookLog.Services {
 
         public async Task CreateAsync(AuthorDto newAuthor) {
             await _dbContext.Authors.AddAsync(DtoToModel(newAuthor));
+            await _dbContext.SaveChangesAsync();
+        }
+
+        public async Task<AuthorDto?> GetByIdAsync(int id) {
+            var author = await _dbContext.Authors.FirstOrDefaultAsync(a => a.Id == id);
+            return author != null ? ModelToDto(author) : null;
+        }
+
+        public async Task UpdateAsync(AuthorDto authorDto) {
+            if (authorDto.Id == null) {
+                throw new ArgumentNullException("Author Id is required for update");
+            }
+            var authorToEdit = await _dbContext.Authors.FindAsync(authorDto.Id!.Value);
+            if (authorToEdit == null) {
+                throw new ArgumentNullException("Author not found");
+            }
+            authorToEdit.FirstName = authorDto.FirstName;
+            authorToEdit.MiddleName = authorDto.MiddleName;
+            authorToEdit.LastName = authorDto.LastName;
+            authorToEdit.Nationality = authorDto.Nationality;
+            authorToEdit.YearOfBirth = authorDto.YearOfBirth;
+            authorToEdit.YearOfDeath = authorDto.YearOfDeath;
+            authorToEdit.DatabazeKnihUrl = authorDto.DatabazeKnihUrl;
             await _dbContext.SaveChangesAsync();
         }
 
