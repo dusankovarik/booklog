@@ -25,7 +25,7 @@ namespace BookLog.Services {
         }
 
         public async Task<AuthorDto?> GetByIdAsync(int id) {
-            var author = await _dbContext.Authors.FirstOrDefaultAsync(a => a.Id == id);
+            var author = await _dbContext.Authors.FindAsync(id);
             return author != null ? ModelToDto(author) : null;
         }
 
@@ -33,7 +33,7 @@ namespace BookLog.Services {
             if (authorDto.Id == null) {
                 throw new ArgumentNullException("Author Id is required for update");
             }
-            var authorToEdit = await _dbContext.Authors.FindAsync(authorDto.Id!.Value);
+            var authorToEdit = await _dbContext.Authors.FindAsync(authorDto.Id.Value);
             if (authorToEdit == null) {
                 throw new ArgumentNullException("Author not found");
             }
@@ -45,6 +45,16 @@ namespace BookLog.Services {
             authorToEdit.YearOfDeath = authorDto.YearOfDeath;
             authorToEdit.DatabazeKnihUrl = authorDto.DatabazeKnihUrl;
             await _dbContext.SaveChangesAsync();
+        }
+
+        public async Task<bool> DeleteAsync(int id) {
+            var studentToDelete = await _dbContext.Authors.FindAsync(id);
+            if (studentToDelete == null) {
+                return false;
+            }
+            _dbContext.Authors.Remove(studentToDelete);
+            await _dbContext.SaveChangesAsync();
+            return true;
         }
 
         private AuthorDto ModelToDto(Author author) {

@@ -38,5 +38,14 @@ namespace BookLog.Controllers {
             await _service.UpdateAsync(author);
             return RedirectToAction("Index");
         }
+
+        [HttpPost]
+        public async Task<IActionResult> Delete(int id) {
+            var deleted = await _service.DeleteAsync(id);
+            if (!deleted) {
+                return View("NotFound");
+            }
+            return RedirectToAction("Index");
+        }
     }
 }
