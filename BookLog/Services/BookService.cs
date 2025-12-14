@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace BookLog.Services {
     public class BookService {
-        ApplicationDbContext _dbContext;
+        private ApplicationDbContext _dbContext;
 
         public BookService(ApplicationDbContext dbContext) {
             _dbContext = dbContext;

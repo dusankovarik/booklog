@@ -10,8 +10,8 @@ namespace BookLog.Controllers {
             _service = service;
         }
 
-        public IActionResult Index() {
-            var allAuthors = _service.GetAllAsync();
+        public async Task<IActionResult> IndexAsync() {
+            var allAuthors = await _service.GetAllAsync();
             return View(allAuthors);
         }
 
