@@ -11,7 +11,7 @@ namespace BookLog.Controllers {
         }
 
         public IActionResult Index() {
-            var allAuthors = _service.GetAll();
+            var allAuthors = _service.GetAllAsync();
             return View(allAuthors);
         }
 

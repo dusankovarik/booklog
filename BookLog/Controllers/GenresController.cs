@@ -11,7 +11,7 @@ namespace BookLog.Controllers {
         }
 
         public IActionResult Index() {
-            var allGenres = _service.GetAll();
+            var allGenres = _service.GetAllAsync();
             return View(allGenres);
         }
 

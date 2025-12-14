@@ -10,8 +10,8 @@ namespace BookLog.Services {
             _dbContext = dbContext;
         }
 
-        public IEnumerable<GenreDto> GetAll() {
-            var allGenres = _dbContext.Genres;
+        public async Task<IEnumerable<GenreDto>> GetAllAsync() {
+            var allGenres = await _dbContext.Genres.ToListAsync();
             var genreDtos = new List<GenreDto>();
             foreach (var genre in allGenres) {
                 genreDtos.Add(ModelToDto(genre));

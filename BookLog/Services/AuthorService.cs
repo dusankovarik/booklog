@@ -10,8 +10,8 @@ namespace BookLog.Services {
             _dbContext = dbContext;
         }
 
-        public IEnumerable<AuthorDto> GetAll() {
-            var allAuthors = _dbContext.Authors;
+        public async Task<IEnumerable<AuthorDto>> GetAllAsync() {
+            var allAuthors = await _dbContext.Authors.ToListAsync();
             var authorDtos = new List<AuthorDto>();
             foreach (var author in allAuthors) {
                 authorDtos.Add(ModelToDto(author));
