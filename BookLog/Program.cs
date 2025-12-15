@@ -12,6 +12,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(options => {
 builder.Services.AddScoped<AuthorService>();
 builder.Services.AddScoped<GenreService>();
 builder.Services.AddScoped<BookService>();
+builder.Services.AddScoped<ReviewService>();
 
 var app = builder.Build();
 
