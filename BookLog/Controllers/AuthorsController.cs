@@ -27,10 +27,7 @@ namespace BookLog.Controllers {
 
         public async Task<IActionResult> Edit(int id) {
             var authorToEdit = await _service.GetByIdAsync(id);
-            if (authorToEdit == null) {
-                return View("NotFound");
-            }
-            return View(authorToEdit);
+            return authorToEdit != null ? View(authorToEdit) : View("NotFound");
         }
 
         [HttpPost]

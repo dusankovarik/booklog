@@ -37,5 +37,10 @@ namespace BookLog.Controllers {
             await _bookService.CreateAsync(newBook);
             return RedirectToAction("Index");
         }
+
+        public async Task<IActionResult> Edit(int id) {
+            var bookToEdit = await _bookService.GetByIdAsync(id);
+            return bookToEdit != null ? View(bookToEdit) : View("NotFound");
+        }
     }
 }

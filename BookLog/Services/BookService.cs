@@ -26,6 +26,12 @@ namespace BookLog.Services {
             await _dbContext.SaveChangesAsync();
         }
 
+        public async Task<BookCreateEditDto?> GetByIdAsync(int id) {
+            var book = await _dbContext.Books.Include(b => b.Authors).Include(b => b.Genres)
+                .FirstOrDefaultAsync(b => b.Id == id);
+            return book != null ? await ModelToCreateEditDto(book) : null;
+        }
+
         private BookListDto ModelToListDto(Book book) {
             return new BookListDto() {
                 Id = book.Id,
@@ -52,6 +58,32 @@ namespace BookLog.Services {
                 Genres = genres,
                 CoverImageUrl= bookCreateEditDto.CoverImageUrl,
                 DatabazeKnihUrl = bookCreateEditDto.DatabazeKnihUrl,
+            };
+        }
+
+        private async Task<BookCreateEditDto> ModelToCreateEditDto(Book book) {
+            var authors = await _dbContext.Authors.OrderBy(a => a.LastName).ToListAsync();
+            var genres = await _dbContext.Genres.OrderBy(g => g.Name).ToListAsync();
+            return new BookCreateEditDto() {
+                Id = book.Id,
+                Title = book.Title,
+                SelectedAuthorIds = book.Authors.Select(a => a.Id).ToList(),
+                SelectedGenreIds = book.Genres.Select(g => g.Id).ToList(),
+
+                Authors = authors.Select(a => new AuthorDto {
+                    Id = a.Id,
+                    FirstName = a.FirstName,
+                    MiddleName = a.MiddleName,
+                    LastName = a.LastName,
+                }).ToList(),
+
+                Genres = genres.Select(g => new GenreDto {
+                    Id = g.Id,
+                    Name = g.Name,
+                }).ToList(),
+
+                CoverImageUrl = book.CoverImageUrl,
+                DatabazeKnihUrl = book.DatabazeKnihUrl,
             };
         }
     }

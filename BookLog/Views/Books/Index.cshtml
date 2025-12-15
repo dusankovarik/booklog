@@ -13,7 +13,7 @@
                 <img src="@book.CoverImageUrl" alt="@book.Title cover" class="img-fluid h-100 rounded" style="object-fit: cover;" />
             </div>
         }
-        <div class="flex-grow-1">
+        <div class="flex-grow-1 d-flex flex-column">
             <h5 class="mb-1">
                 @book.Title
                 @if (!string.IsNullOrWhiteSpace(book.DatabazeKnihUrl)) {
@@ -27,6 +27,12 @@
                 @foreach (var genre in book.Genres) {
                     <span class="badge bg-light text-dark border me-1">@genre</span>
                 }
+            </div>
+            <div class="mt-auto pt-2">
+                <a class="btn btn-warning" asp-action="Edit" asp-route-id="@book.Id">Edit</a>
+                <form method="post" style="display: inline">
+                    <button type="submit" class="btn btn-danger" asp-action="Delete" asp-route-id="@book.Id">Delete</button>
+                </form>
             </div>
         </div>
     </div>
