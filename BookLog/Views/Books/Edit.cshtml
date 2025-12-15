@@ -14,7 +14,8 @@
         <h5>Select author(s) of the book</h5>
         @foreach (var author in Model.Authors) {
             <div class="form-check">
-                <input class="form-check-input" type="checkbox" name="SelectedAuthorIds" value="@author.Id" id="author_@author.Id" />
+                <input class="form-check-input" type="checkbox" name="SelectedAuthorIds" value="@author.Id" id="author_@author.Id"
+                       @(author.Id.HasValue && Model.SelectedAuthorIds.Contains(author.Id.Value) ? "checked" : "") />
                 <label class="form-check-label" for="author_@author.Id">@author.FullName</label>
             </div>
         }
@@ -23,7 +24,8 @@
         <h5>Select genres of the book</h5>
         @foreach (var genre in Model.Genres) {
             <div class="form-check">
-                <input class="form-check-input" type="checkbox" name="SelectedGenreIds" value="@genre.Id" id="genre_@genre.Id" />
+                <input class="form-check-input" type="checkbox" name="SelectedGenreIds" value="@genre.Id" id="genre_@genre.Id"
+                       @(genre.Id.HasValue && Model.SelectedGenreIds.Contains(genre.Id.Value) ? "checked" : "") />
                 <label class="form-check-label" for="genre_@genre.Id">@genre.Name</label>
             </div>
         }

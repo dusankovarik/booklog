@@ -32,6 +32,33 @@ namespace BookLog.Services {
             return book != null ? await ModelToCreateEditDto(book) : null;
         }
 
+        public async Task UpdateAsync(BookCreateEditDto bookCreateEditDto) {
+            if (bookCreateEditDto.Id == null) {
+                throw new ArgumentNullException("Book Id is required");
+            }
+            var book = await _dbContext.Books.Include(b => b.Authors).Include(b => b.Genres)
+                .FirstOrDefaultAsync(b => b.Id == bookCreateEditDto.Id.Value);
+            if (book == null) {
+                throw new ArgumentNullException("Book not found");
+            }
+            book.Title = bookCreateEditDto.Title;
+            book.Authors.Clear();
+            var authors = await _dbContext.Authors.Where(a => bookCreateEditDto.SelectedAuthorIds.Contains(a.Id))
+                .ToListAsync();
+            foreach (var author in authors) {
+                book.Authors.Add(author);
+            }
+            book.Genres.Clear();
+            var genres = await _dbContext.Genres.Where(g => bookCreateEditDto.SelectedGenreIds.Contains(g.Id))
+                .ToListAsync();
+            foreach (var genre in genres) {
+                book.Genres.Add(genre);
+            }
+            book.CoverImageUrl = bookCreateEditDto.CoverImageUrl;
+            book.DatabazeKnihUrl = bookCreateEditDto.DatabazeKnihUrl;
+            await _dbContext.SaveChangesAsync();
+        }
+
         private BookListDto ModelToListDto(Book book) {
             return new BookListDto() {
                 Id = book.Id,

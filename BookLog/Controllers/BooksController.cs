@@ -42,5 +42,16 @@ namespace BookLog.Controllers {
             var bookToEdit = await _bookService.GetByIdAsync(id);
             return bookToEdit != null ? View(bookToEdit) : View("NotFound");
         }
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(BookCreateEditDto bookCreateEditDto) {
+            if (!ModelState.IsValid) {
+                bookCreateEditDto.Authors = (await _authorService.GetAllAsync()).ToList();
+                bookCreateEditDto.Genres = (await _genreService.GetAllAsync()).ToList();
+                return View(bookCreateEditDto);
+            }
+            await _bookService.UpdateAsync(bookCreateEditDto);
+            return RedirectToAction("Index");
+        }
     }
 }

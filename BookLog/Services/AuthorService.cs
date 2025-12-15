@@ -11,7 +11,7 @@ namespace BookLog.Services {
         }
 
         public async Task<IEnumerable<AuthorDto>> GetAllAsync() {
-            var allAuthors = await _dbContext.Authors.ToListAsync();
+            var allAuthors = await _dbContext.Authors.OrderBy(a => a.LastName).ToListAsync();
             var authorDtos = new List<AuthorDto>();
             foreach (var author in allAuthors) {
                 authorDtos.Add(ModelToDto(author));

@@ -11,7 +11,7 @@ namespace BookLog.Services {
         }
 
         public async Task<IEnumerable<GenreDto>> GetAllAsync() {
-            var allGenres = await _dbContext.Genres.ToListAsync();
+            var allGenres = await _dbContext.Genres.OrderBy(g => g.Name).ToListAsync();
             var genreDtos = new List<GenreDto>();
             foreach (var genre in allGenres) {
                 genreDtos.Add(ModelToDto(genre));
