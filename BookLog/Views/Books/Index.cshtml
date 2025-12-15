@@ -14,7 +14,12 @@
             </div>
         }
         <div class="flex-grow-1">
-            <h5 class="mb-1">@book.Title</h5>
+            <h5 class="mb-1">
+                @book.Title
+                @if (!string.IsNullOrWhiteSpace(book.DatabazeKnihUrl)) {
+                    <a href="@book.DatabazeKnihUrl" target="_blank" title="DatabazeKnih.cz">🔗</a>
+                }
+            </h5>
             <div class="text-muted mb-2">
                 @string.Join(", ", book.Authors)
             </div>

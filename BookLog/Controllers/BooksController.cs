@@ -26,5 +26,16 @@ namespace BookLog.Controllers {
             };
             return View(newBook);
         }
+
+        [HttpPost]
+        public async Task<IActionResult> Create(BookCreateEditDto newBook) {
+            if (!ModelState.IsValid) {
+                newBook.Authors = (await _authorService.GetAllAsync()).ToList();
+                newBook.Genres = (await _genreService.GetAllAsync()).ToList();
+                return View(newBook);
+            }
+            await _bookService.CreateAsync(newBook);
+            return RedirectToAction("Index");
+        }
     }
 }

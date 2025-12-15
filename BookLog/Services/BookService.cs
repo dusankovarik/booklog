@@ -1,6 +1,7 @@
 ﻿using BookLog.Dtos;
 using BookLog.Models;
 using Microsoft.EntityFrameworkCore;
+using System.Threading.Tasks;
 
 namespace BookLog.Services {
     public class BookService {
@@ -20,6 +21,11 @@ namespace BookLog.Services {
             return bookListDtos;
         }
 
+        public async Task CreateAsync(BookCreateEditDto newBook) {
+            await _dbContext.Books.AddAsync(await CreateEditDtoToModel(newBook));
+            await _dbContext.SaveChangesAsync();
+        }
+
         private BookListDto ModelToListDto(Book book) {
             return new BookListDto() {
                 Id = book.Id,
@@ -30,6 +36,22 @@ namespace BookLog.Services {
                 Genres = book.Genres.Select(g => g.Name).ToList(),
                 CoverImageUrl = book.CoverImageUrl,
                 DatabazeKnihUrl = book.DatabazeKnihUrl,
+            };
+        }
+
+        private async Task<Book> CreateEditDtoToModel(BookCreateEditDto bookCreateEditDto) {
+            var authors = await _dbContext.Authors
+                .Where(a => bookCreateEditDto.SelectedAuthorIds.Contains(a.Id))
+                .ToListAsync();
+            var genres = await _dbContext.Genres
+                .Where(g => bookCreateEditDto.SelectedGenreIds.Contains(g.Id))
+                .ToListAsync();
+            return new Book() {
+                Title = bookCreateEditDto.Title,
+                Authors = authors,
+                Genres = genres,
+                CoverImageUrl= bookCreateEditDto.CoverImageUrl,
+                DatabazeKnihUrl = bookCreateEditDto.DatabazeKnihUrl,
             };
         }
     }
