@@ -1,5 +1,6 @@
 ﻿using BookLog.Dtos;
 using BookLog.Models;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Threading.Tasks;
 
@@ -57,6 +58,16 @@ namespace BookLog.Services {
             book.CoverImageUrl = bookCreateEditDto.CoverImageUrl;
             book.DatabazeKnihUrl = bookCreateEditDto.DatabazeKnihUrl;
             await _dbContext.SaveChangesAsync();
+        }
+
+        public async Task<bool> DeleteAsync(int id) {
+            var bookToDelete = await _dbContext.Books.FindAsync(id);
+            if (bookToDelete == null) {
+                return false;
+            }
+            _dbContext.Books.Remove(bookToDelete);
+            await _dbContext.SaveChangesAsync();
+            return true;
         }
 
         private BookListDto ModelToListDto(Book book) {
