@@ -1,18 +1,30 @@
-﻿using BookLog.Services;
+﻿using BookLog.Dtos;
+using BookLog.Services;
 using Microsoft.AspNetCore.Mvc;
-using System.Threading.Tasks;
 
 namespace BookLog.Controllers {
     public class BooksController : Controller {
-        private BookService _service;
+        private BookService _bookService;
+        private AuthorService _authorService;
+        private GenreService _genreService;
 
-        public BooksController(BookService service) {
-            _service = service;
+        public BooksController(BookService bookService, AuthorService authorService, GenreService genreService) {
+            _bookService = bookService;
+            _authorService = authorService;
+            _genreService = genreService;
         }
 
         public async Task<IActionResult> Index() {
-            var allBooks = await _service.GetAllAsync();
+            var allBooks = await _bookService.GetAllAsync();
             return View(allBooks);
+        }
+
+        public async Task<IActionResult> Create() {
+            var newBook = new BookCreateEditDto() {
+                Authors = (await _authorService.GetAllAsync()).ToList(),
+                Genres = (await _genreService.GetAllAsync()).ToList(),
+            };
+            return View(newBook);
         }
     }
 }
