@@ -10,7 +10,8 @@
     <div class="border border-1 border-dark p-2 mb-3 d-flex align-items-stretch gap-3">
         @if (!string.IsNullOrWhiteSpace(book.CoverImageUrl)) {
             <div style="width: 120px; flex-shrink: 0;">
-                <img src="@book.CoverImageUrl" alt="@book.Title cover" class="img-fluid h-100 rounded" style="object-fit: cover;" />
+                <img src="@book.CoverImageUrl" alt="@book.Title cover" class="img-fluid h-100 rounded"
+                     style="object-fit: cover;" />
             </div>
         }
         <div class="flex-grow-1 d-flex flex-column">
@@ -29,9 +30,11 @@
                 }
             </div>
             <div class="mt-auto pt-2">
-                <a class="btn btn-warning" asp-action="Edit" asp-route-id="@book.Id">Edit</a>
+                <a class="btn btn-primary btn-sm" asp-controller="Books" asp-action="Details"
+                   asp-route-id="@book.Id">Reviews</a>
+                <a class="btn btn-warning btn-sm" asp-action="Edit" asp-route-id="@book.Id">Edit</a>
                 <form method="post" style="display: inline">
-                    <button type="submit" class="btn btn-danger" asp-action="Delete" asp-route-id="@book.Id">Delete</button>
+                    <button type="submit" class="btn btn-danger btn-sm" asp-action="Delete" asp-route-id="@book.Id">Delete</button>
                 </form>
             </div>
         </div>

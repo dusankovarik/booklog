@@ -1,0 +1,17 @@
+﻿@using BookLog.ViewModels
+
+@model BookDetailsViewModel
+
+<h1>@Model.Book.Title</h1>
+<h4 class="text-danger">@string.Join(", ", Model.Book.Authors)</h4>
+
+<form asp-action="Create" method="post">
+    <input type="submit" class="btn btn-success" value="Create" />
+</form>
+
+@section Scripts {
+    @{
+        <partial name="_ValidationScriptsPartial" />
+    }
+}
+

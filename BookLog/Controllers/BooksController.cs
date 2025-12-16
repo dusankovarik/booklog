@@ -1,5 +1,6 @@
 ﻿using BookLog.Dtos;
 using BookLog.Services;
+using BookLog.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BookLog.Controllers {
@@ -7,11 +8,14 @@ namespace BookLog.Controllers {
         private BookService _bookService;
         private AuthorService _authorService;
         private GenreService _genreService;
+        private ReviewService _reviewService;
 
-        public BooksController(BookService bookService, AuthorService authorService, GenreService genreService) {
+        public BooksController(
+            BookService bookService, AuthorService authorService, GenreService genreService, ReviewService reviewService) {
             _bookService = bookService;
             _authorService = authorService;
             _genreService = genreService;
+            _reviewService = reviewService;
         }
 
         public async Task<IActionResult> Index() {
@@ -61,6 +65,22 @@ namespace BookLog.Controllers {
                 return View("NotFound");
             }
             return RedirectToAction("Index");
+        }
+
+        public async Task<IActionResult> Details(int id) {
+            var book = await _reviewService.GetBookDetailsAsync(id);
+            if (book == null) {
+                return View("NotFound");
+            }
+            var reviews = await _reviewService.GetByBookIdAsync(id);
+            var bookDetailsVM = new BookDetailsViewModel() {
+                Book = book,
+                Reviews = reviews,
+                NewReview = new ReviewCreateDto() {
+                    BookId = id,
+                },
+            };
+            return View(bookDetailsVM);
         }
     }
 }

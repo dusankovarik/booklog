@@ -1,8 +1,6 @@
 ﻿using BookLog.Dtos;
 using BookLog.Models;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using System.Threading.Tasks;
 
 namespace BookLog.Services {
     public class BookService {
