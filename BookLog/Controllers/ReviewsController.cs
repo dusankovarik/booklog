@@ -22,5 +22,14 @@ namespace BookLog.Controllers {
             await _service.CreateAsync(reviewCreateDto);
             return RedirectToAction("Details", "Books", new { id = reviewCreateDto.BookId });
         }
+
+        [HttpPost]
+        public async Task<IActionResult> Delete(int reviewId, int bookId) {
+            var deleted = await _service.DeleteAsync(reviewId);
+            if (!deleted) {
+                return View("NotFound");
+            };
+            return RedirectToAction("Details", "Books", new { id = bookId });
+        }
     }
 }

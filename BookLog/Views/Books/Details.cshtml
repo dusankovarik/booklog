@@ -37,6 +37,11 @@ else {
             <strong>@review.Rating / 5</strong>
             <p>@review.Text</p>
             <small>@review.CreatedAt</small>
+            <form asp-controller="Reviews" asp-action="Delete" method="post">
+                <input type="hidden" name="reviewId" value="@review.Id" />
+                <input type="hidden" name="bookId" value="@Model.Book.Id" />
+                <button class="btn btn-sm btn-danger mt-2">Delete</button>
+            </form>
         </div>
     }
 }

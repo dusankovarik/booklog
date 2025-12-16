@@ -45,6 +45,16 @@ namespace BookLog.Services {
             await _dbContext.SaveChangesAsync();
         }
 
+        internal async Task<bool> DeleteAsync(int id) {
+            var reviewToDelete = await _dbContext.Reviews.FindAsync(id);
+            if (reviewToDelete == null) {
+                return false;
+            }
+            _dbContext.Reviews.Remove(reviewToDelete);
+            await _dbContext.SaveChangesAsync();
+            return true;
+        }
+
         private ReviewDto ModelToDto(Review review) {
             return new ReviewDto() {
                 Id = review.Id,
@@ -61,6 +71,6 @@ namespace BookLog.Services {
                 Text = reviewCreateDto.Text,
                 CreatedAt = DateOnly.FromDateTime(DateTime.Now),
             };
-        }
+        } 
     }
 }
