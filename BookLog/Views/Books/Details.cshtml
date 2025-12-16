@@ -2,11 +2,66 @@
 
 @model BookDetailsViewModel
 
-<h1>@Model.Book.Title</h1>
-<h4 class="text-danger">@string.Join(", ", Model.Book.Authors)</h4>
+<div class="p-2 mb-3 d-flex align-items-stretch gap-3">
+    @if (!string.IsNullOrWhiteSpace(Model.Book.CoverImageUrl)) {
+        <div style="flex-shrink: 0;">
+            <img src="@Model.Book.CoverImageUrl" alt="@Model.Book.Title cover" class="img-fluid h-100 rounded"
+                 style="object-fit: cover;" />
+        </div>
+    }
+    <div class="flex-grow-1 d-flex flex-column">
+        <h2 class="mb-1">
+            @Model.Book.Title
+            @if (!string.IsNullOrWhiteSpace(Model.Book.DatabazeKnihUrl)) {
+                <a href="@Model.Book.DatabazeKnihUrl" target="_blank" title="DatabazeKnih.cz">🔗</a>
+            }
+        </h2>
+        <h3 class="text-muted mb-2">
+            @string.Join(", ", Model.Book.Authors)
+        </h3>
+        <div class="mt-2">
+            @foreach (var genre in Model.Book.Genres) {
+                <span class="badge bg-light text-dark border me-1 px-3 py-2 fs-6">@genre</span>
+            }
+        </div>
+    </div>
+</div>
 
-<form asp-action="Create" method="post">
-    <input type="submit" class="btn btn-success" value="Create" />
+<h4>Reviews</h4>
+@if (!Model.Reviews.Any()) {
+    <p>No reviews yet.</p>
+}
+else {
+    foreach (var review in Model.Reviews) {
+        <div class="border p-2 mb-2">
+            <strong>@review.Rating / 5</strong>
+            <p>@review.Text</p>
+            <small>@review.CreatedAt</small>
+        </div>
+    }
+}
+
+<h4>Add review</h4>
+<form asp-controller="Reviews" asp-action="Create" method="post">
+    <input type="hidden" name="BookId" value="@Model.Book.Id" />
+    <div class="mb-2">
+        <label>Rating</label>
+        <select name="Rating" class="form-select">
+            <option value="">Select rating</option>
+            <option value="1">⭐ 1</option>
+            <option value="2">⭐⭐ 2</option>
+            <option value="3">⭐⭐⭐ 3</option>
+            <option value="4">⭐⭐⭐⭐ 4</option>
+            <option value="5">⭐⭐⭐⭐⭐ 5</option>
+        </select>
+        <span asp-validation-for="NewReview.Rating" class="text-danger"></span>
+    </div>
+    <div class="mb-2">
+        <label>Review</label>
+        <textarea name="Text" class="form-control"></textarea>
+        <span asp-validation-for="NewReview.Text" class="text-danger"></span>
+    </div>
+    <button type="submit" class="btn btn-primary mt-2">Add review</button>
 </form>
 
 @section Scripts {
@@ -14,4 +69,3 @@
         <partial name="_ValidationScriptsPartial" />
     }
 }
-

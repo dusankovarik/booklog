@@ -1,4 +1,5 @@
-﻿using BookLog.Services;
+﻿using BookLog.Dtos;
+using BookLog.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BookLog.Controllers {
@@ -11,6 +12,15 @@ namespace BookLog.Controllers {
 
         public IActionResult Index() {
             return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Create(ReviewCreateDto reviewCreateDto) {
+            if (!ModelState.IsValid) {
+                return RedirectToAction("Details", "Books", new { id = reviewCreateDto.BookId });
+            }
+            await _service.CreateAsync(reviewCreateDto);
+            return RedirectToAction("Details", "Books", new { id = reviewCreateDto.BookId });
         }
     }
 }

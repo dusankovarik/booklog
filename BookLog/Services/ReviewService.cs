@@ -12,7 +12,8 @@ namespace BookLog.Services {
         }
 
         public async Task<BookDetailsDto?> GetBookDetailsAsync(int bookId) {
-            var book = await _dbContext.Books.FindAsync(bookId);
+            var book = await _dbContext.Books.Include(b => b.Authors).Include(b => b.Genres)
+                .FirstOrDefaultAsync(b => b.Id == bookId);
             if (book == null) {
                 return null;
             }
@@ -39,12 +40,26 @@ namespace BookLog.Services {
             return reviewDtos;
         }
 
+        public async Task CreateAsync(ReviewCreateDto reviewCreateDto) {
+            await _dbContext.Reviews.AddAsync(DtoToModel(reviewCreateDto));
+            await _dbContext.SaveChangesAsync();
+        }
+
         private ReviewDto ModelToDto(Review review) {
             return new ReviewDto() {
                 Id = review.Id,
                 Rating = review.Rating,
                 Text = review.Text,
                 CreatedAt = review.CreatedAt,
+            };
+        }
+
+        private Review DtoToModel(ReviewCreateDto reviewCreateDto) {
+            return new Review() {
+                BookId = reviewCreateDto.BookId,
+                Rating = reviewCreateDto.Rating!.Value,
+                Text = reviewCreateDto.Text,
+                CreatedAt = DateOnly.FromDateTime(DateTime.Now),
             };
         }
     }
