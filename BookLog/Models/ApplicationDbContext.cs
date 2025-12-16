@@ -1,7 +1,8 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 
 namespace BookLog.Models {
-    public class ApplicationDbContext : DbContext {
+    public class ApplicationDbContext : IdentityDbContext<AppUser> {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) { }
 
         public DbSet<Author> Authors { get; set; }
