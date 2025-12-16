@@ -43,26 +43,10 @@ else {
 
 <h4>Add review</h4>
 <form asp-controller="Reviews" asp-action="Create" method="post">
-    <input type="hidden" name="BookId" value="@Model.Book.Id" />
-    <div class="mb-2">
-        <label>Rating</label>
-        <select name="Rating" class="form-select">
-            <option value="">Select rating</option>
-            <option value="1">⭐ 1</option>
-            <option value="2">⭐⭐ 2</option>
-            <option value="3">⭐⭐⭐ 3</option>
-            <option value="4">⭐⭐⭐⭐ 4</option>
-            <option value="5">⭐⭐⭐⭐⭐ 5</option>
-        </select>
-        <span asp-validation-for="NewReview.Rating" class="text-danger"></span>
-    </div>
-    <div class="mb-2">
-        <label>Review</label>
-        <textarea name="Text" class="form-control"></textarea>
-        <span asp-validation-for="NewReview.Text" class="text-danger"></span>
-    </div>
+    <partial name="_ReviewForm" model="Model.NewReview" />
     <button type="submit" class="btn btn-primary mt-2">Add review</button>
 </form>
+
 
 @section Scripts {
     @{
