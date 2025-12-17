@@ -69,7 +69,7 @@ namespace BookLog.Services {
         }
 
         private BookListDto ModelToListDto(Book book) {
-            return new BookListDto() {
+            return new BookListDto {
                 Id = book.Id,
                 Title = book.Title,
                 Authors = book.Authors
@@ -88,7 +88,7 @@ namespace BookLog.Services {
             var genres = await _dbContext.Genres
                 .Where(g => bookCreateEditDto.SelectedGenreIds.Contains(g.Id))
                 .ToListAsync();
-            return new Book() {
+            return new Book {
                 Title = bookCreateEditDto.Title,
                 Authors = authors,
                 Genres = genres,
@@ -100,7 +100,7 @@ namespace BookLog.Services {
         private async Task<BookCreateEditDto> ModelToCreateEditDto(Book book) {
             var authors = await _dbContext.Authors.OrderBy(a => a.LastName).ToListAsync();
             var genres = await _dbContext.Genres.OrderBy(g => g.Name).ToListAsync();
-            return new BookCreateEditDto() {
+            return new BookCreateEditDto {
                 Id = book.Id,
                 Title = book.Title,
                 SelectedAuthorIds = book.Authors.Select(a => a.Id).ToList(),

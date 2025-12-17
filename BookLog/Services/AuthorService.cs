@@ -58,7 +58,7 @@ namespace BookLog.Services {
         }
 
         private AuthorDto ModelToDto(Author author) {
-            return new AuthorDto() {
+            return new AuthorDto {
                 Id = author.Id,
                 FirstName = author.FirstName,
                 MiddleName = author.MiddleName,
@@ -71,7 +71,7 @@ namespace BookLog.Services {
         }
 
         private Author DtoToModel(AuthorDto authorDto) {
-            return new Author() {
+            return new Author {
                 FirstName = authorDto.FirstName,
                 MiddleName = authorDto.MiddleName,
                 LastName = authorDto.LastName,

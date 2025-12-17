@@ -17,7 +17,7 @@ namespace BookLog.Services {
             if (book == null) {
                 return null;
             }
-            var bookDetailsDto = new BookDetailsDto() {
+            var bookDetailsDto = new BookDetailsDto {
                 Id = book.Id,
                 Title = book.Title,
                 CoverImageUrl = book.CoverImageUrl,
@@ -56,7 +56,7 @@ namespace BookLog.Services {
         }
 
         private ReviewDto ModelToDto(Review review) {
-            return new ReviewDto() {
+            return new ReviewDto {
                 Id = review.Id,
                 Rating = review.Rating,
                 Text = review.Text,
@@ -65,7 +65,7 @@ namespace BookLog.Services {
         }
 
         private Review DtoToModel(ReviewCreateDto reviewCreateDto) {
-            return new Review() {
+            return new Review {
                 BookId = reviewCreateDto.BookId,
                 Rating = reviewCreateDto.Rating!.Value,
                 Text = reviewCreateDto.Text,

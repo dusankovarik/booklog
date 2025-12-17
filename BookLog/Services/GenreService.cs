@@ -52,14 +52,14 @@ namespace BookLog.Services {
         }
 
         private GenreDto ModelToDto(Genre genre) {
-            return new GenreDto() {
+            return new GenreDto {
                 Id = genre.Id,
                 Name = genre.Name,
             };
         }
 
         private Genre DtoToModel(GenreDto genreDto) {
-            return new Genre() {
+            return new Genre {
                 Name = genreDto.Name,
             };
         }
