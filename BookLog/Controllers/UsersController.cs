@@ -1,9 +1,11 @@
 ﻿using BookLog.Models;
 using BookLog.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BookLog.Controllers {
+    [Authorize(Roles = "Administrator")]
     public class UsersController : Controller {
         private UserManager<AppUser> _userManager;
         private IPasswordHasher<AppUser> _passwordHasher;

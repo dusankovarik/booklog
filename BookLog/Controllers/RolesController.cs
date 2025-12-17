@@ -1,8 +1,10 @@
 ﻿using BookLog.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BookLog.Controllers {
+    [Authorize(Roles = "Administrator")]
     public class RolesController : Controller {
         private RoleManager<IdentityRole> _roleManager;
         private UserManager<AppUser> _userManager; 
