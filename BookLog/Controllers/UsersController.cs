@@ -12,7 +12,7 @@ namespace BookLog.Controllers {
         }
 
         public IActionResult Index() {
-            return View();
+            return View(_userManager.Users);
         }
 
         public IActionResult Create() => View();
