@@ -6,15 +6,20 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace BookLog.Controllers {
     public class HomeController : Controller {
-        private UserManager<AppUser> _userMagager;
+        private UserManager<AppUser> _userManager;
 
         public HomeController(UserManager<AppUser> userMagager) {
-            _userMagager = userMagager;
+            _userManager = userMagager;
         }
 
         [Authorize]
-        public IActionResult Index() {
-            string message = "Hello ";
+        public async Task<IActionResult> IndexAsync() {
+            var user = await _userManager.GetUserAsync(HttpContext.User);
+            string message = "Hello";
+            if (user != null) {
+                message += " " + user.UserName;
+            }
+            message += "!";
             return View("Index", message);
         }
 

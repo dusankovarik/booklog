@@ -9,5 +9,7 @@ namespace BookLog.ViewModels {
         public string Password { get; set; } = string.Empty;
 
         public string? ReturnUrl { get; set; }
+
+        public bool Remember { get; set; }
     }
 }
