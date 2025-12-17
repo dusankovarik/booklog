@@ -17,6 +17,21 @@ builder.Services.AddScoped<GenreService>();
 builder.Services.AddScoped<BookService>();
 builder.Services.AddScoped<ReviewService>();
 
+builder.Services.Configure<IdentityOptions>(options => {
+    options.Password.RequiredLength = 8;
+    options.Password.RequiredUniqueChars = 5;
+    options.Password.RequireLowercase = true;
+    options.Password.RequireUppercase = true;
+    options.Password.RequireDigit = true;
+    options.Password.RequireNonAlphanumeric = true;
+});
+
+builder.Services.ConfigureApplicationCookie(options => {
+    options.Cookie.Name = ".AspNetCore.Identity.Application";
+    options.ExpireTimeSpan = TimeSpan.FromMinutes(20);
+    options.SlidingExpiration = true;
+});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
