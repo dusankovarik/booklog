@@ -40,8 +40,8 @@ namespace BookLog.Services {
             return reviewDtos;
         }
 
-        public async Task CreateAsync(ReviewCreateDto reviewCreateDto) {
-            await _dbContext.Reviews.AddAsync(DtoToModel(reviewCreateDto));
+        public async Task CreateAsync(ReviewCreateDto reviewCreateDto, string userName) {
+            await _dbContext.Reviews.AddAsync(DtoToModel(reviewCreateDto, userName));
             await _dbContext.SaveChangesAsync();
         }
 
@@ -61,15 +61,17 @@ namespace BookLog.Services {
                 Rating = review.Rating,
                 Text = review.Text,
                 CreatedAt = review.CreatedAt,
+                UserName = review.UserName,
             };
         }
 
-        private Review DtoToModel(ReviewCreateDto reviewCreateDto) {
+        private Review DtoToModel(ReviewCreateDto reviewCreateDto, string userName) {
             return new Review {
                 BookId = reviewCreateDto.BookId,
                 Rating = reviewCreateDto.Rating!.Value,
                 Text = reviewCreateDto.Text,
                 CreatedAt = DateOnly.FromDateTime(DateTime.Now),
+                UserName = userName,
             };
         } 
     }

@@ -6,5 +6,6 @@
         public int Rating { get; set; }
         public required string Text { get; set; }
         public DateOnly CreatedAt { get; set; }
+        public required string UserName { get; set; }
     }
 }

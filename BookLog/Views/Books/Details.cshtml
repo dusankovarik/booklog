@@ -36,7 +36,9 @@ else {
         <div class="border p-2 mb-2">
             <strong>@review.Rating / 5</strong>
             <p>@review.Text</p>
-            <small>@review.CreatedAt</small>
+            <small>
+                by <strong>@review.UserName</strong> · @review.CreatedAt
+            </small>
             <form asp-controller="Reviews" asp-action="Delete" method="post">
                 <input type="hidden" name="reviewId" value="@review.Id" />
                 <input type="hidden" name="bookId" value="@Model.Book.Id" />

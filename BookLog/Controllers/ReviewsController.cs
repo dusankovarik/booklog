@@ -1,5 +1,6 @@
 ﻿using BookLog.Dtos;
 using BookLog.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BookLog.Controllers {
@@ -15,11 +16,13 @@ namespace BookLog.Controllers {
         }
 
         [HttpPost]
+        [Authorize]
         public async Task<IActionResult> Create(ReviewCreateDto reviewCreateDto) {
             if (!ModelState.IsValid) {
                 return RedirectToAction("Details", "Books", new { id = reviewCreateDto.BookId });
             }
-            await _service.CreateAsync(reviewCreateDto);
+            var userName = User.Identity!.Name!;
+            await _service.CreateAsync(reviewCreateDto, userName);
             return RedirectToAction("Details", "Books", new { id = reviewCreateDto.BookId });
         }
 
