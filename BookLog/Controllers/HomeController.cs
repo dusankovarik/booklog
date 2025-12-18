@@ -23,7 +23,7 @@ namespace BookLog.Controllers {
             return View("Index", message);
         }
 
-        public IActionResult Privacy() {
+        public IActionResult About() {
             return View();
         }
 
