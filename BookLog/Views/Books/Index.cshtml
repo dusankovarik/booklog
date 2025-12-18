@@ -3,9 +3,23 @@
 @model IEnumerable<BookListDto>
 
 <h1>List of all books</h1>
+
+<form asp-action="Search" method="get" style="display: inline">
+    <label for="search">Search books:</label>
+    <input type="search" list="search-books" id="search" name="query" />
+    <datalist id="search-books">
+        @foreach (var book in Model) {
+            <option value="@book.Title"></option>
+        }
+    </datalist>
+    <button type="submit" class="btn btn-primary">Search</button>
+</form>
+<a asp-action="CancelFilter" class="btn btn-secondary">Cancel filter</a>
+
 <div class="mb-3">
     <a class="btn btn-success" asp-action="Create">Create</a>
 </div>
+
 @foreach (var book in Model) {
     <div class="border border-1 border-dark p-2 mb-3 d-flex align-items-stretch gap-3">
         @if (!string.IsNullOrWhiteSpace(book.CoverImageUrl)) {
@@ -31,7 +45,7 @@
             </div>
             <div class="mt-auto pt-2">
                 <a class="btn btn-primary btn-sm" asp-controller="Books" asp-action="Details"
-                   asp-route-id="@book.Id">Reviews</a>
+                   asp-route-id="@book.Id">Details</a>
                 <a class="btn btn-warning btn-sm" asp-action="Edit" asp-route-id="@book.Id">Edit</a>
                 <form method="post" style="display: inline">
                     <button type="submit" class="btn btn-danger btn-sm" asp-action="Delete" asp-route-id="@book.Id">Delete</button>

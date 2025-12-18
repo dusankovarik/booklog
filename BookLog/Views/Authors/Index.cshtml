@@ -7,7 +7,7 @@
     <a class="btn btn-success" asp-action="Create">Create</a>
 </div>
 @foreach (var author in Model) {
-    <div class="border border-1 border-dark p-2">
+    <div class="border border-1 border-dark mb-3 p-2">
         <h5>
             @author.FullName
             @if (!string.IsNullOrWhiteSpace(author.DatabazeKnihUrl)) {

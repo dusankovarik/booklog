@@ -67,6 +67,15 @@ namespace BookLog.Controllers {
             return RedirectToAction("Index");
         }
 
+        public IActionResult Search(string query) {
+            var foundBooks = _bookService.GetByTextInTitle(query);
+            return View("Index", foundBooks);
+        }
+
+        public IActionResult CancelFilter() {
+            return RedirectToAction("Index");
+        }
+
         public async Task<IActionResult> Details(int id) {
             var book = await _reviewService.GetBookDetailsAsync(id);
             if (book == null) {

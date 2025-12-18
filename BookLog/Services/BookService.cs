@@ -68,6 +68,23 @@ namespace BookLog.Services {
             return true;
         }
 
+        public IEnumerable<BookListDto> GetByTextInTitle(string query) {
+            query = query.ToLower();
+            var booksThatMatch = new List<Book>();
+            var returnedBooks = new List<BookListDto>();
+            var words = query.Split(' ');
+            foreach (var word in words) {
+                var books = _dbContext.Books.Include(b => b.Authors).Include(b => b.Genres)
+                    .Where(b => b.Title.ToLower().Contains(word)).ToList();
+                booksThatMatch.AddRange(books);
+            }
+            booksThatMatch = booksThatMatch.DistinctBy(b => b.Id).ToList();
+            foreach (var book in booksThatMatch) {
+                returnedBooks.Add(ModelToListDto(book));
+            }
+            return returnedBooks;
+        }
+
         private BookListDto ModelToListDto(Book book) {
             return new BookListDto {
                 Id = book.Id,
